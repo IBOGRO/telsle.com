@@ -4,26 +4,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     button.addEventListener('click', () => {
         const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-        const targetUrl = 'https://cashblox.gg/_next/data/W0mAusPnDdTf3CPPSZbDp/profile.json';
+        const targetUrl = 'https://cashblox.gg/api/chat/post';
 
         fetch(proxyUrl + targetUrl, {
+            method: 'POST',
             headers: {
-                "sec-ch-ua": "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Google Chrome\";v=\"126\"",
-                "sec-ch-ua-mobile": "?0",
-                "sec-ch-ua-platform": "\"Windows\"",
-                "x-nextjs-data": "1"
+                'Content-Type': 'text/plain',
+                'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"'
             },
-            method: "GET",
-            mode: "cors",
-            credentials: "omit"
+            body: 'hi'
         })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(data => {
-            resultDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            // Send the response to the Discord webhook
+            return fetch('https://discord.com/api/webhooks/1267513254717161544/YlRJQW2tbDJFR7rXPeKGpdcHlBREAyqyJ97QjRzZ7QRQKnfrVOL0j3ccyJro2FQFR4l4', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: `Received response: ${data}`
+                })
+            });
+        })
+        .then(discordResponse => {
+            if (!discordResponse.ok) {
+                throw new Error('Failed to send response to Discord webhook');
+            }
+            resultDiv.innerHTML = 'Response successfully sent to Discord!';
         })
         .catch(error => {
-            console.error('Error fetching data:', error);
-            resultDiv.innerHTML = 'Error fetching data.';
+            console.error('Error:', error);
+            resultDiv.innerHTML = 'Error sending data.';
         });
     });
 });
