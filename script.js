@@ -3,13 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultDiv = document.getElementById('result');
 
     button.addEventListener('click', () => {
-        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-        const targetUrl = 'https://cashblox.gg/api/chat/post';
-
-        fetch(proxyUrl + targetUrl, {
+        fetch('https://cashblox.gg/api/chat/post', {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain',
+                // Add any additional headers required for authentication here
                 'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"'
