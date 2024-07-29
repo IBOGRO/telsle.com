@@ -6,13 +6,15 @@ const app = express();
 app.use(express.json());
 app.use(express.text());
 
-// Endpoint to handle the client request and forward it to Discord
+// Endpoint to handle the client request and forward it to the external API
 app.post('/proxy/chat', async (req, res) => {
     try {
         // Make the request to the external API
         const apiResponse = await axios.post('https://cashblox.gg/api/chat/post', req.body, {
             headers: {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'text/plain',
+                // Include any necessary authentication headers if required
+                // Example: 'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
             }
         });
 
